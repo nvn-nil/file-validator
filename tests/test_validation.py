@@ -1,7 +1,7 @@
 import unittest
 from uuid import uuid4
 
-from file_validator.validate import validate_file
+from file_validator import validate_file
 
 
 class TestValidation(unittest.TestCase):
