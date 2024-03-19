@@ -1,0 +1,10 @@
+{
+    "document": {
+        "encoding": "windows-1252",
+        "metadataSchema": "metadata.json",
+        "filenameSchema": "filename.json"
+    },
+    "content": {
+        "headerSchema": "header.json"
+    }
+}

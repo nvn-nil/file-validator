@@ -1,0 +1,55 @@
+{
+    "type": "array",
+    "prefixItems": [
+        {
+            "type": "string",
+            "pattern": "Created \\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2} by \\S+ \\d+\\.\\d+\\.\\d+"
+        },
+        {
+            "type": "string",
+            "pattern": "^$"
+        },
+        {
+            "type": "string",
+            "pattern": "Latitude = \\d+(\\.\\d+)?"
+        },
+        {
+            "type": "string",
+            "pattern": "Longitude = \\d+(\\.\\d+)?"
+        },
+        {
+            "type": "string",
+            "pattern": "Elevation = \\d+(\\.\\d+)? m"
+        },
+        {
+            "type": "string",
+            "pattern": "Calm threshold = \\d+(\\.\\d+)? m/s"
+        },
+        {
+            "type": "string",
+            "pattern": "^$"
+        },
+        {
+            "type": "string",
+            "pattern": ".*"
+        },
+        {
+            "type": "string",
+            "pattern": ".*"
+        },
+        {
+            "type": "string",
+            "pattern": ""
+        },
+        {
+            "type": "string",
+            "pattern": ".*"
+        },
+        {
+            "type": "string",
+            "pattern": "^$"
+        }
+    ],
+    "minItems": 12,
+    "maxItems": 12
+}

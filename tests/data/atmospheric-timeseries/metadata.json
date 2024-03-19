@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "properties": {
+        "location": {
+            "type": "string",
+            "pattern": "^Point\\([0-9.]+ [0-9.]+\\)$"
+        },
+        "elevation": {
+            "type": "number"
+        },
+        "timezone": {
+            "type": "string"
+        },
+        "file_id": {
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "location",
+        "elevation",
+        "timezone",
+        "file_id"
+    ]
+}

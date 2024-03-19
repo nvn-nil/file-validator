@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "document": {
+            "type": "object",
+            "properties": {
+                "encoding": {
+                    "type": "string",
+                    "default": "utf-8"
+                },
+                "metadataSchema": {
+                    "type": "string",
+                    "description": "Path to the metadataSchema"
+                },
+                "filenameSchema": {
+                    "type": "string",
+                    "description": "Path to the metadataSchema"
+                }
+            },
+            "required": [
+                "metadataSchema",
+                "filenameSchema"
+            ]
+        },
+        "content": {
+            "type": "object",
+            "properties": {
+                "headerSchema": {
+                    "type": "string",
+                    "description": "Path to header schema"
+                }
+            },
+            "required": [
+                "headerSchema"
+            ]
+        }
+    },
+    "required": [
+        "document",
+        "content"
+    ]
+}

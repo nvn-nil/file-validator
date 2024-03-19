@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "file-validator"
+version = "0.1.0"
+description = ""
+authors = ["Naveen Anil <naveen@nvn-nil.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+jsonschema = "^4.21.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

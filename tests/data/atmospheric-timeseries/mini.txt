@@ -1,0 +1,15 @@
+Created 08-12-2020 15:58 by Windographer 4.2.15
+
+Latitude = 17.305
+Longitude = 106.665
+Elevation = 40 m
+Calm threshold = 0 m/s
+
+Included flags: <Unflagged data>
+Excluded flags:
+
+Time stamps indicate the beginning of the time step.
+
+Date/Time	WS_120_mean [m/s]	WD_120_mean [°]	T_120_mean [°C]	P_120_mean [hPa]	Air Density 120m [kg/m3]
+2014-01-10 04:00	8.200	281.7	3.10	910.0	1.141
+2014-01-10 04:10	8.210	282.4	2.90	910.0	1.142
