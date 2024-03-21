@@ -12,6 +12,9 @@ class TestValidation(unittest.TestCase):
         
         validate_file(file_path, metadata, definition_file_path)
 
+        metadata = {"location": "POINT(12 13.0)", "elevation": 123, "timezone": "UTC", "file_id": str(uuid4())}
+        validate_file(file_path, metadata, definition_file_path)
+
     def test_validate_deserialized_metadata(self):
         metadata_schema_file_path = r"tests\data\atmospheric-timeseries\metadata.json"
         file_id = str(uuid4())
@@ -32,7 +35,7 @@ class TestValidation(unittest.TestCase):
     def test_atmospheric_timeseries_validation_deserialized_metadata(self):
         file_path = r"tests\data\atmospheric-timeseries\mini.txt"
         definition_file_path = r"tests\data\atmospheric-timeseries\definition.json"
-        metadata = {"location": "Point(12 13.0)", "elevation": "123", "timezone": "UTC", "file_id": str(uuid4())}
+        metadata = {"location": "Point(12 13)", "elevation": "123", "timezone": "UTC", "file_id": str(uuid4())}
         
         validate_file(file_path, metadata, definition_file_path, handle_deserialized_metadata=True)
 

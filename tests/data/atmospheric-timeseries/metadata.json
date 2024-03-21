@@ -3,7 +3,7 @@
     "properties": {
         "location": {
             "type": "string",
-            "pattern": "^Point\\([0-9.]+ [0-9.]+\\)$"
+            "pattern": "^((\\bPoint\\b)|(\\bPOINT\\b))\\((\\d+(\\.\\d+)?) (\\d+(\\.\\d+)?)\\)$"
         },
         "elevation": {
             "type": "number"
