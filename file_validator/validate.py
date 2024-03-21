@@ -1,12 +1,28 @@
 import os
 import re
+import sys
 import json
+import traceback
 
 from jsonschema import validate as validate_jsonschema
 
 
 ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
 DEFINITION_SCHEMA_PATH = os.path.join(ROOT_PATH, "file_validator", "schema", "definition_schema.json")
+
+
+def get_numeric_fields_in_schema(schema):
+    if schema["type"] == "number":
+        return True
+    
+    fields = {}
+    if schema["type"] == "object":
+        for field in schema["properties"]:
+            fields[field] = get_numeric_fields_in_schema(schema["properties"][field])
+
+        return fields
+    
+    return False
 
 
 def get_absolute_path_from_relative_path(filepath, base_dir):
@@ -16,7 +32,7 @@ def get_absolute_path_from_relative_path(filepath, base_dir):
     return filepath
 
 
-def validate_file(filepath, metadata, definition_file):
+def validate_file(filepath, metadata, definition_file, handle_deserialized_metadata=False):
     """
     >>> file_path = r"atmospheric-timeseries\wind_time_series_mini.txt"
     >>> definition_file_path = r"atmospheric-timeseries\definition.json"
@@ -35,9 +51,30 @@ def validate_file(filepath, metadata, definition_file):
     filename_schema_file = get_absolute_path_from_relative_path(definition_data["document"]["filenameSchema"], definition_dir)
     header_schema_file = get_absolute_path_from_relative_path(definition_data["content"]["headerSchema"], definition_dir)
 
-    validate_from_schema_file(metadata, metadata_schema_file)
+    validated_metadata = validate_metadata(metadata, metadata_schema_file, handle_deserialized=handle_deserialized_metadata)
     validate_from_schema_file(os.path.basename(filepath), filename_schema_file)
     validate_header(filepath, definition_data["document"].get("encoding", "utf-8"), header_schema_file)
+
+    return filepath, validated_metadata
+
+
+def validate_metadata(metadata, metadata_schema_file, handle_deserialized=False):
+    try:
+        validate_from_schema_file(metadata, metadata_schema_file)
+    except Exception:
+        if not handle_deserialized:
+            raise
+    else:
+        return metadata
+
+    with open(metadata_schema_file, "r") as fi:
+        schema = json.load(fi)
+    numeric_schema_fields = get_numeric_fields_in_schema(schema)
+    numeric_casted_metadata = { key: float(value) if numeric_schema_fields[key] else value for key, value in metadata.items() }
+    validate_from_schema_file(numeric_casted_metadata, metadata_schema_file)
+
+    return numeric_casted_metadata
+
 
 
 def validate_from_schema_file(data, schema_file):
