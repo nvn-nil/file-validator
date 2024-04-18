@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "file-validator"
-version = "0.0.3"
+version = "0.0.4"
 description = ""
 authors = ["Naveen Anil <naveen@nvn-nil.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
-jsonschema = "^4.21.1"
+python = ">=3.9"
+jsonschema = ">=4.4.0"
 
 
 [tool.poetry.group.dev.dependencies]
