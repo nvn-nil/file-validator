@@ -1,19 +1,12 @@
 import os
 import re
-
 from jsonschema import validate as validate_jsonschema
 
-from file_validator.utilities import (
-    get_json,
-    get_numeric_fields_in_schema,
-    get_absolute_path_from_relative_path,
-)
+from file_validator.utilities import get_absolute_path_from_relative_path, get_json, get_numeric_fields_in_schema
 
 
 ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
-DEFINITION_SCHEMA_PATH = os.path.join(
-    ROOT_PATH, "file_validator", "schema", "definition_schema.json"
-)
+DEFINITION_SCHEMA_PATH = os.path.join(ROOT_PATH, "file_validator", "schema", "definition_schema.json")
 
 
 def validate_file(
@@ -25,7 +18,7 @@ def validate_file(
     header_schema=None,
     handle_deserialized_metadata=False,
 ):
-    """
+    r"""
     >>> file_path = r"atmospheric-timeseries\wind_time_series_mini.txt"
     >>> definition_file_path = r"atmospheric-timeseries\definition.json"
     >>> metadata = {"location": "Point(12 13.0)", "elevation": 123, "timezone": "UTC", "file_id": str(uuid4())}
@@ -63,22 +56,13 @@ def validate_file(
         header_schema = get_json(header_schema_path)
 
     if not (
-        isinstance(definition, dict)
-        and isinstance(metadata_schema, dict)
-        and isinstance(filename_schema, dict)
-        and isinstance(header_schema, dict)
+        isinstance(metadata_schema, dict) and isinstance(filename_schema, dict) and isinstance(header_schema, dict)
     ):
-        raise Exception(
-            "definition, metadata_schema, filename_schema, header_schema is required"
-        )
+        raise Exception("definition, metadata_schema, filename_schema, header_schema is required")
 
-    validated_metadata = validate_metadata(
-        metadata, metadata_schema, handle_deserialized=handle_deserialized_metadata
-    )
+    validated_metadata = validate_metadata(metadata, metadata_schema, handle_deserialized=handle_deserialized_metadata)
     validate_jsonschema(os.path.basename(filepath), schema=filename_schema)
-    validate_header(
-        filepath, definition_data["document"].get("encoding", "utf-8"), header_schema
-    )
+    validate_header(filepath, definition_data["document"].get("encoding", "utf-8"), header_schema)
 
     return filepath, validated_metadata
 
@@ -95,7 +79,7 @@ def validate_metadata(metadata, metadata_schema, handle_deserialized=False):
 
     numeric_schema_fields = get_numeric_fields_in_schema(schema)
     numeric_casted_metadata = {
-        key: float(value) if numeric_schema_fields[key] else value
+        key: float(value) if key in numeric_schema_fields and numeric_schema_fields[key] else value
         for key, value in metadata.items()
     }
     validate_jsonschema(numeric_casted_metadata, schema=schema)
@@ -127,10 +111,6 @@ def validate_header(filepath, encoding, schema):
 
     if not all(results):
         invalid_headers = {
-            headers[i]: schema["prefixItems"][i]["pattern"]
-            for i, result in enumerate(results)
-            if result is False
+            headers[i]: schema["prefixItems"][i]["pattern"] for i, result in enumerate(results) if result is False
         }
-        raise Exception(
-            f"Header validation failed. Header validation status: {invalid_headers}"
-        )
+        raise Exception(f"Header validation failed. Header validation status: {invalid_headers}")

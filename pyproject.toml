@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "file-validator"
-version = "0.0.4"
+version = "0.0.5"
 description = ""
 authors = ["Naveen Anil <naveen@nvn-nil.com>"]
 readme = "README.md"
