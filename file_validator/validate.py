@@ -56,10 +56,7 @@ def validate_file(
         header_schema = get_json(header_schema_path)
 
     if not (
-        isinstance(definition, dict)
-        and isinstance(metadata_schema, dict)
-        and isinstance(filename_schema, dict)
-        and isinstance(header_schema, dict)
+        isinstance(metadata_schema, dict) and isinstance(filename_schema, dict) and isinstance(header_schema, dict)
     ):
         raise Exception("definition, metadata_schema, filename_schema, header_schema is required")
 
