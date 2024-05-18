@@ -36,9 +36,7 @@ class TestValidation(unittest.TestCase):
             "file_id": file_id,
         }
 
-        validated_metadata = validate_metadata(
-            metadata, metadata_schema_file_path, handle_deserialized=True
-        )
+        validated_metadata = validate_metadata(metadata, metadata_schema_file_path, handle_deserialized=True)
         expected_metadata = {
             "location": "Point(12 13.0)",
             "elevation": 123.0,
@@ -70,9 +68,7 @@ class TestValidation(unittest.TestCase):
             "file_id": str(uuid4()),
         }
 
-        validate_file(
-            file_path, metadata, definition_file_path, handle_deserialized_metadata=True
-        )
+        validate_file(file_path, metadata, definition_file_path, handle_deserialized_metadata=True)
 
     def test_validate_file_from_schema_data(self):
         file_path = r"tests\data\atmospheric-timeseries\mini.txt"
@@ -118,6 +114,19 @@ class TestValidation(unittest.TestCase):
         )
         self.assertDictEqual(validated_metadata, metadata)
         self.assertEqual(file_path, validated_path)
+
+    def test_additional_field(self):
+        metadata = {
+            "location": "Point(1 2)",
+            "elevation": "2",
+            "timezone": "UTC",
+            "file_id": "some",
+            "notification_endpoint": "asdkjhaskdlj",
+        }
+        schema = r"tests\data\atmospheric-timeseries\metadata.json"
+        validated = validate_metadata(metadata, schema, handle_deserialized=True)
+
+        self.assertEqual(validated["notification_endpoint"], metadata["notification_endpoint"])
 
 
 if __name__ == "__main__":
